@@ -1,7 +1,10 @@
 import { Fragment } from "react";
 import Head from "next/head";
+import { GetServerSideProps } from "next";
+import { fetchPoke } from "../utils/fetchPoke";
 
-const Home = () => {
+const Home = ({ pokemonsCount }: { pokemonsCount: number }) => {
+  console.log(pokemonsCount);
   return (
     <Fragment>
       <Head>
@@ -17,6 +20,31 @@ const Home = () => {
       </div>
     </Fragment>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  //! Caching
+  //? Lama karena data jumlah jarang berubah
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=1800, stale-while-revalidate=3600"
+  );
+  //! Untuk mendapatkan jumlah saja
+  const data = await fetchPoke<{
+    count: number;
+    next: string;
+    previous: string;
+    results: Array<{
+      name: string;
+      url: string;
+    }>;
+  }>(`https://pokeapi.co/api/v2/pokemon?limit=1`);
+
+  return {
+    props: {
+      pokemonsCount: data.count,
+    },
+  };
 };
 
 export default Home;
