@@ -25,18 +25,24 @@ const Navbar = () => {
 
         <div className="px-1 flex">
           <button
-            className="text-accent1"
+            className="bg-bLightSecondary dark:bg-bDarkSecondary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110"
             onClick={() => toggleDarkMode(!isDarkMode)}
           >
-            Toggle Dark Mode
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
+            </svg>
           </button>
-          <Image
-            src="/avatar.png"
-            alt="Avatar"
-            width={40}
-            height={40}
-            className="rounded-full"
-          />
         </div>
       </div>
     </nav>

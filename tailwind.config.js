@@ -16,7 +16,7 @@ module.exports = {
         bDarkPrimary: "#121318",
         bDarkSecondary: "#212328",
         tDarkPrimary: "#dbdbdb",
-        accent1: "#ff6740",
+        accent1: "#D61C4E",
       },
     },
     container: {
