@@ -69,7 +69,7 @@ const Home = ({ pokemons, count }: { pokemons: Name[]; count: number }) => {
             }}
           >
             <input
-              className="border-tLightPrimary border-2 p-2 rounded-lg"
+              className="border-2 p-2 rounded-lg dark:bg-bDarkSecondary dark:border-bDarkSecondary "
               type="text"
               name="search"
               placeholder="Search with pokemon name"
