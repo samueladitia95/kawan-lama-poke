@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useCard } from "./useCard";
 import Loading from "../Loading";
+import DetailModal from "../DetailModal";
 import { readSavedPokemons } from "../../utils/readSavedPokemons";
 
 export default function Card({ url }: { url: string }) {
   const { isLoading, pokemon } = useCard(url);
   const [isCaptured, setIsCaptured] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (pokemon) {
@@ -40,11 +42,16 @@ export default function Card({ url }: { url: string }) {
   }
 
   return (
-    <div>
-      <h1 className="dark:text-tDarkPrimary">{pokemon.name}</h1>
-      <button className="bg-accent1" onClick={savePokemon}>
-        {isCaptured ? "Already Captured" : "Capture"}
-      </button>
-    </div>
+    <>
+      <div onClick={() => setIsModalOpen(true)}>
+        <h1 className="dark:text-tDarkPrimary">{pokemon.name}</h1>
+        <button className="bg-accent1" onClick={savePokemon}>
+          {isCaptured ? "Already Captured" : "Capture"}
+        </button>
+      </div>
+
+      {/* MODAL DETAIL */}
+      {isModalOpen && <DetailModal closeModal={setIsModalOpen} />}
+    </>
   );
 }
