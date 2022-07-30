@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import { useCard } from "./useCard";
 import Loading from "../Loading";
 import DetailModal from "../DetailModal";
@@ -12,13 +12,13 @@ export default function Card({
   pokemonId,
   deletePokemon,
   isMax,
-  setIsMax,
+  checkMax,
 }: {
   url?: string;
   pokemonId?: string;
   deletePokemon?: (pokemonId: string) => void;
   isMax?: boolean;
-  setIsMax?: Dispatch<SetStateAction<boolean>>;
+  checkMax?: () => void;
 }) {
   const { isLoading, pokemon } = useCard(
     url ? url : `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
@@ -32,20 +32,11 @@ export default function Card({
 
       if (savedPokemons && savedPokemons.includes(String(pokemon.id))) {
         setIsCaptured(true);
-      }
-    }
-  }, [pokemon]);
-
-  useEffect(() => {
-    if (setIsMax) {
-      const savedPokemons = readSavedPokemons();
-      if (savedPokemons && savedPokemons.length >= 10) {
-        setIsMax(true);
       } else {
-        setIsMax(false);
+        setIsCaptured(false);
       }
     }
-  }, [isCaptured, setIsMax]);
+  }, [pokemon, url]);
 
   const savePokemon = () => {
     const stringId = String(pokemon.id);
@@ -58,6 +49,9 @@ export default function Card({
         savedPokemons ? savedPokemons.join(";") : stringId
       );
       setIsCaptured(true);
+      if (checkMax) {
+        checkMax();
+      }
     }
   };
 

@@ -4,10 +4,11 @@ import { GetServerSideProps } from "next";
 import { fetcher } from "../utils/fetcher";
 import Card from "../components/Card";
 import { Name } from "../type";
+import { readSavedPokemons } from "../utils/readSavedPokemons";
 
 const Home = ({ pokemons }: { pokemons: Name[] }) => {
   const [isMax, setIsMax] = useState<boolean>(false);
-  const [randomPokemons, setRandomPokemon] = useState<Name[]>([]);
+  const [randomPokemons, setRandomPokemons] = useState<Name[]>([]);
   const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
@@ -16,8 +17,22 @@ const Home = ({ pokemons }: { pokemons: Name[] }) => {
       .map(() => {
         return pokemons[Math.floor(Math.random() * 1154)];
       });
-    setRandomPokemon(randomPokemonUrls);
+    setRandomPokemons(randomPokemonUrls);
   }, [pokemons]);
+
+  useEffect(() => {
+    checkMax();
+  }, [randomPokemons]);
+
+  const checkMax = () => {
+    const savedPokemons = readSavedPokemons();
+
+    if (savedPokemons && savedPokemons.length >= 10) {
+      setIsMax(true);
+    } else {
+      setIsMax(false);
+    }
+  };
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,7 +43,8 @@ const Home = ({ pokemons }: { pokemons: Name[] }) => {
     if (randomPokemonUrls.length > 5) {
       randomPokemonUrls = randomPokemonUrls.slice(0, 5);
     }
-    setRandomPokemon(randomPokemonUrls);
+
+    setRandomPokemons(randomPokemonUrls);
   };
 
   return (
@@ -70,7 +86,7 @@ const Home = ({ pokemons }: { pokemons: Name[] }) => {
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
           {randomPokemons.map(({ url }, index: number) => {
             return (
-              <Card key={index} url={url} isMax={isMax} setIsMax={setIsMax} />
+              <Card key={index} url={url} isMax={isMax} checkMax={checkMax} />
             );
           })}
         </div>
