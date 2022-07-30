@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { Pokemon } from "../../type";
 import { fetcher } from "../../utils/fetcher";
 
 export function useCapturedCard(id: string) {
@@ -7,8 +8,9 @@ export function useCapturedCard(id: string) {
     fetcher
   );
 
+  const pokemon: Pokemon = data;
   return {
-    pokemon: data,
+    pokemon,
     isLoading: !error && !data,
     isError: error,
   };

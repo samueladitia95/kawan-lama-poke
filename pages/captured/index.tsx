@@ -21,11 +21,20 @@ export default function Captured() {
 
   return (
     <div>
-      {savedids.map((el: string) => {
-        return (
-          <CapturedCard key={el} pokemonId={el} deletePokemon={deletePokemon} />
-        );
-      })}
+      <h1 className="dark:text-tDarkPrimary text-5xl text-center my-4">
+        Captured Pokemons
+      </h1>
+      <div className="flex flex-col items-center">
+        {savedids.map((el: string) => {
+          return (
+            <CapturedCard
+              key={el}
+              pokemonId={el}
+              deletePokemon={deletePokemon}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
