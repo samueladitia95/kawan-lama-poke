@@ -3,9 +3,11 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { fetcher } from "../utils/fetcher";
 import Card from "../components/Card";
+import { Name } from "../type";
 
-const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
+const Home = ({ randomPokemonUrls }: { randomPokemonUrls: Name[] }) => {
   const [isMax, setIsMax] = useState<boolean>(false);
+
   return (
     <Fragment>
       <Head>
@@ -18,7 +20,7 @@ const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
           Random Pokemons
         </h1>
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
-          {randomPokemonUrls.map((url: string, index: number) => {
+          {randomPokemonUrls.map(({ url }, index: number) => {
             return (
               <Card key={index} url={url} isMax={isMax} setIsMax={setIsMax} />
             );
@@ -32,17 +34,18 @@ const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=2, stale-while-revalidate=5"
+    "public, s-maxage=1800, stale-while-revalidate=3600"
   );
 
-  const randomOffset = Math.floor(Math.random() * 1149);
-  const data = await fetcher(
-    `https://pokeapi.co/api/v2/pokemon?offset=${randomOffset}&limit=5`
-  );
+  // const randomOffset = Math.floor(Math.random() * 1149);
+  const data = await fetcher(`https://pokeapi.co/api/v2/pokemon?limit=1154`);
 
-  const randomPokemonUrls: string[] = data.results.map(
-    (el: { name: string; url: string }) => el.url
-  );
+  const pokemons: Name[] = data.results;
+  const randomPokemonUrls: Name[] = Array(5)
+    .fill("")
+    .map(() => {
+      return pokemons[Math.floor(Math.random() * 1154)];
+    });
   return {
     props: {
       randomPokemonUrls,
