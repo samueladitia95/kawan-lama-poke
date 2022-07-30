@@ -46,7 +46,7 @@ export default function Card({ url }: { url: string }) {
 
   return (
     <>
-      <div className="my-4 py-4 px-2  rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary">
+      <div className="my-4 py-4 px-2 rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary w-full sm:max-w-xl">
         <div className="flex space-x-4">
           <div
             className="bg-accent1/20 rounded-full cursor-pointer"
@@ -60,7 +60,7 @@ export default function Card({ url }: { url: string }) {
             />
           </div>
           <div className="flex flex-col flex-1 space-y-2">
-            <p className="dark:text-tDarkPrimary text-2xl">
+            <p className="dark:text-tDarkPrimary text-xl">
               <span className="text-sm font-light">#${pokemon.order}</span>{" "}
               {capitalizeFirstLetter(pokemon.name)}
             </p>
