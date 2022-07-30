@@ -1,9 +1,42 @@
+import { useState, useEffect } from "react";
 import { useCard } from "./useCard";
 import Loading from "../Loading";
 
 export default function Card({ url }: { url: string }) {
   const { isLoading, pokemon } = useCard(url);
-  console.log(pokemon);
+  const [isCaptured, setIsCaptured] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (pokemon) {
+      const savedPokemons = window.localStorage
+        .getItem("saved_pokemons")
+        ?.split(";");
+
+      if (savedPokemons && savedPokemons.includes(String(pokemon.id))) {
+        setIsCaptured(true);
+      }
+    }
+  }, [pokemon]);
+
+  const savePokemon = () => {
+    const stringId = String(pokemon.id);
+    const savedPokemons = window.localStorage
+      .getItem("saved_pokemons")
+      ?.split(";");
+
+    if (isCaptured) {
+      console.log(`duplicates`);
+    } else if (savedPokemons && savedPokemons.length >= 10) {
+      console.log(`too Long`);
+    } else {
+      savedPokemons?.push(stringId);
+      window.localStorage.setItem(
+        "saved_pokemons",
+        savedPokemons ? savedPokemons.join(";") : pokemon.id
+      );
+      setIsCaptured(true);
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -12,6 +45,9 @@ export default function Card({ url }: { url: string }) {
   return (
     <div>
       <h1 className="dark:text-tDarkPrimary">{pokemon.name}</h1>
+      <button className="bg-accent1" onClick={savePokemon}>
+        {isCaptured ? "Already Captured" : "Capture"}
+      </button>
     </div>
   );
 }
