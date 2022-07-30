@@ -43,6 +43,8 @@ export default function DetailModal({
                 pokemon.sprites.other["dream_world"].front_default
                   ? pokemon.sprites.other["dream_world"].front_default
                   : pokemon.sprites.other["official-artwork"].front_default
+                  ? pokemon.sprites.other["official-artwork"].front_default
+                  : "/image404.png"
               }
               width={350}
               height={350}

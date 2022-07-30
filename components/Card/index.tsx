@@ -60,7 +60,7 @@ export default function Card({
       setIsCaptured(true);
     }
   };
-
+  console.log(url);
   if (isLoading) {
     return <Loading />;
   }
@@ -78,6 +78,8 @@ export default function Card({
                 pokemon.sprites.other["dream_world"].front_default
                   ? pokemon.sprites.other["dream_world"].front_default
                   : pokemon.sprites.other["official-artwork"].front_default
+                  ? pokemon.sprites.other["official-artwork"].front_default
+                  : "/image404.png"
               }
               alt="Pokemon List"
               width={180}
