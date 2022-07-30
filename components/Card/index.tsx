@@ -51,7 +51,7 @@ export default function Card({
     const stringId = String(pokemon.id);
     const savedPokemons = readSavedPokemons();
 
-    if (savedPokemons && savedPokemons.length < 10) {
+    if (!savedPokemons || (savedPokemons && savedPokemons.length < 10)) {
       savedPokemons?.push(stringId);
       window.localStorage.setItem(
         "saved_pokemons",
