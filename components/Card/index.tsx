@@ -47,7 +47,7 @@ export default function Card({ url }: { url: string }) {
   return (
     <>
       <div className="my-4 py-4 px-2 rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary w-full sm:max-w-xl">
-        <div className="flex space-x-4">
+        <div className="flex gap-4">
           <div
             className="bg-accent1/20 rounded-full cursor-pointer"
             onClick={() => setIsModalOpen(true)}
@@ -59,12 +59,12 @@ export default function Card({ url }: { url: string }) {
               height={180}
             />
           </div>
-          <div className="flex flex-col flex-1 space-y-2">
+          <div className="flex flex-col flex-1 gap-2">
             <p className="dark:text-tDarkPrimary text-xl">
               <span className="text-sm font-light">#${pokemon.order}</span>{" "}
               {capitalizeFirstLetter(pokemon.name)}
             </p>
-            <div className="flex space-x-2 text-tDarkPrimary font-semibold">
+            <div className="flex gap-2 text-tDarkPrimary font-semibold">
               {pokemon.types.map((el) => (
                 <div
                   key={el.slot}
