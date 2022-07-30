@@ -6,7 +6,7 @@ import Card from "../components/Card";
 import { Name } from "../type";
 import { readSavedPokemons } from "../utils/readSavedPokemons";
 
-const Home = ({ pokemons }: { pokemons: Name[] }) => {
+const Home = ({ pokemons, count }: { pokemons: Name[]; count: number }) => {
   const [isMax, setIsMax] = useState<boolean>(false);
   const [randomPokemons, setRandomPokemons] = useState<Name[]>([]);
   const [query, setQuery] = useState<string>("");
@@ -15,10 +15,10 @@ const Home = ({ pokemons }: { pokemons: Name[] }) => {
     const randomPokemonUrls: Name[] = Array(5)
       .fill("")
       .map(() => {
-        return pokemons[Math.floor(Math.random() * 1154)];
+        return pokemons[Math.floor(Math.random() * count)];
       });
     setRandomPokemons(randomPokemonUrls);
-  }, [pokemons]);
+  }, [pokemons, count]);
 
   useEffect(() => {
     checkMax();
@@ -101,13 +101,17 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     "public, s-maxage=1800, stale-while-revalidate=3600"
   );
 
-  // const randomOffset = Math.floor(Math.random() * 1149);
-  const data = await fetcher(`https://pokeapi.co/api/v2/pokemon?limit=1154`);
+  //! Just to get total pokemons
+  const { count } = await fetcher(`https://pokeapi.co/api/v2/pokemon?limit=1`);
+  const data = await fetcher(
+    `https://pokeapi.co/api/v2/pokemon?limit=${count}`
+  );
 
   const pokemons: Name[] = data.results;
   return {
     props: {
       pokemons,
+      count,
     },
   };
 };
