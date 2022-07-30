@@ -1,10 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { fetcher } from "../utils/fetcher";
 import Card from "../components/Card";
 
 const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
+  const [isMax, setIsMax] = useState<boolean>(false);
   return (
     <Fragment>
       <Head>
@@ -18,7 +19,9 @@ const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
         </h1>
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
           {randomPokemonUrls.map((url: string, index: number) => {
-            return <Card key={index} url={url} />;
+            return (
+              <Card key={index} url={url} isMax={isMax} setIsMax={setIsMax} />
+            );
           })}
         </div>
       </div>

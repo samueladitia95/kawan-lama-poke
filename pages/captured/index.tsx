@@ -16,7 +16,11 @@ export default function Captured() {
       (el: string) => el !== pokemonId
     );
     setSavedIds(newSavedIds);
-    window.localStorage.setItem("saved_pokemons", newSavedIds.join(";"));
+    if (!newSavedIds.length) {
+      window.localStorage.removeItem("saved_pokemons");
+    } else {
+      window.localStorage.setItem("saved_pokemons", newSavedIds.join(";"));
+    }
   };
 
   return (
@@ -24,11 +28,20 @@ export default function Captured() {
       <h1 className="dark:text-tDarkPrimary text-5xl text-center my-4">
         Captured Pokemons
       </h1>
-      <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
-        {savedids.map((el: string) => {
-          return <Card key={el} pokemonId={el} deletePokemon={deletePokemon} />;
-        })}
-      </div>
+
+      {!savedids.length ? (
+        <p className="dark:text-tDarkPrimary text-5xl text-center my-4">
+          You Don`t Have Any Pokemons
+        </p>
+      ) : (
+        <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
+          {savedids.map((el: string) => {
+            return (
+              <Card key={el} pokemonId={el} deletePokemon={deletePokemon} />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

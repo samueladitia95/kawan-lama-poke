@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { useCard } from "./useCard";
 import Loading from "../Loading";
 import DetailModal from "../DetailModal";
@@ -11,10 +11,14 @@ export default function Card({
   url,
   pokemonId,
   deletePokemon,
+  isMax,
+  setIsMax,
 }: {
   url?: string;
   pokemonId?: string;
   deletePokemon?: (pokemonId: string) => void;
+  isMax?: boolean;
+  setIsMax?: Dispatch<SetStateAction<boolean>>;
 }) {
   const { isLoading, pokemon } = useCard(
     url ? url : `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
@@ -32,15 +36,22 @@ export default function Card({
     }
   }, [pokemon]);
 
+  useEffect(() => {
+    if (setIsMax) {
+      const savedPokemons = readSavedPokemons();
+      if (savedPokemons && savedPokemons.length >= 10) {
+        setIsMax(true);
+      } else {
+        setIsMax(false);
+      }
+    }
+  }, [isCaptured, setIsMax]);
+
   const savePokemon = () => {
     const stringId = String(pokemon.id);
     const savedPokemons = readSavedPokemons();
 
-    if (isCaptured) {
-      console.log(`duplicates`);
-    } else if (savedPokemons && savedPokemons.length >= 10) {
-      console.log(`too Long`);
-    } else {
+    if (savedPokemons && savedPokemons.length < 10) {
       savedPokemons?.push(stringId);
       window.localStorage.setItem(
         "saved_pokemons",
@@ -63,7 +74,11 @@ export default function Card({
             onClick={() => setIsModalOpen(true)}
           >
             <Image
-              src={pokemon.sprites.other["official-artwork"].front_default}
+              src={
+                pokemon.sprites.other["dream_world"].front_default
+                  ? pokemon.sprites.other["dream_world"].front_default
+                  : pokemon.sprites.other["official-artwork"].front_default
+              }
               alt="Pokemon List"
               width={180}
               height={180}
@@ -103,10 +118,19 @@ export default function Card({
                 </button>
               ) : (
                 <button
-                  className=" bg-bLightPrimary dark:bg-bDarkPrimary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110 w-full"
+                  className={`bg-bLightPrimary dark:bg-bDarkPrimary p-3 rounded-full transition ease-in-out delay-100 w-full ${
+                    !isCaptured && !isMax
+                      ? "hover:bg-accent1 hover:bg-opacity-80 hover:scale-110 dark:hover:bg-accent1"
+                      : ""
+                  }`}
                   onClick={savePokemon}
+                  disabled={isCaptured || isMax}
                 >
-                  {isCaptured ? "Already Captured" : "Capture"}
+                  {isCaptured
+                    ? "Already Captured"
+                    : isMax
+                    ? "You already have too many"
+                    : "Capture"}
                 </button>
               )}
             </div>
