@@ -94,7 +94,9 @@ export default function Card({ url }: { url: string }) {
       </div>
 
       {/* MODAL DETAIL */}
-      {isModalOpen && <DetailModal closeModal={setIsModalOpen} />}
+      {isModalOpen && (
+        <DetailModal closeModal={setIsModalOpen} pokemon={pokemon} />
+      )}
     </>
   );
 }

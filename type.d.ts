@@ -9,12 +9,13 @@ export type Pokemon = {
   location_area_encounters: string;
   weight: number;
   height: number;
-  abilities: Name[];
+  abilities: Ability[];
   forms: Name[];
   species: Name;
   sprites: Sprite;
   stats: Stat[];
   types: Type[];
+  moves: Move[];
 };
 
 type Name = {
@@ -78,3 +79,12 @@ type Type = {
 };
 
 type TypeColor = keyof typeof typeColor;
+
+type Move = {
+  move: Name;
+  version_group_details: {
+    level_learned_at: number;
+    move_learn_method: Name;
+    version_group: Name;
+  }[];
+};

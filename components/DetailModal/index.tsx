@@ -1,18 +1,27 @@
+import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import type { Pokemon } from "../../type";
+import { capitalizeFirstLetter } from "../../utils/capiralizeFirstLetter";
+import { typeColor } from "../../utils/typeColor";
 
 export default function DetailModal({
   closeModal,
+  pokemon,
 }: {
   closeModal: Dispatch<SetStateAction<boolean>>;
+  pokemon: Pokemon;
 }) {
   return (
     <>
       <div className="bg-black opacity-40 fixed h-screen w-screen top-0 left-0 z-40"></div>
       <div className="overflow-y-auto overflow-x-hidden fixed z-50 w-full inset-0 h-full flex justify-center ">
         <div className="relative p-4 w-full max-w-2xl h-full md:h-auto ">
-          <div className="relative bg-white rounded-xl shadow dark:bg-bDarkPrimary">
+          <div className="relative bg-white rounded-xl shadow dark:bg-bDarkPrimary flex flex-col items-stretch gap-6">
             <div className="flex justify-between items-center p-5 rounded-t border-b">
-              <p className="text-xl">Detail Pokemon</p>
+              <p className="text-2xl w-full text-center">
+                <span className="text-sm font-light">#${pokemon.order}</span>{" "}
+                {capitalizeFirstLetter(pokemon.name)}
+              </p>
               <button
                 type="button"
                 className="text-tLightPrimary dark:text-tDarkPrimary bg-transparent hover:bg-bLightSecondary dark:hover:bg-bDarkSecondary rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -29,8 +38,68 @@ export default function DetailModal({
               </button>
             </div>
 
-            <div className="flex justify-between items-center p-5">
-              HELLO THERE
+            <Image
+              src={pokemon.sprites.other.dream_world.front_default}
+              width={350}
+              height={350}
+              alt="Front"
+            />
+            <div className="p-5 flex gap-20">
+              <div>
+                <p className="font-semibold text-lg">Type</p>
+                <div className="flex gap-4">
+                  {pokemon.types.map((el) => (
+                    <div
+                      key={el.slot}
+                      className="rounded-lg px-3 my-2 text-lg font-semibold"
+                      style={{ backgroundColor: typeColor[el.type.name] }}
+                    >
+                      {capitalizeFirstLetter(el.type.name)}
+                    </div>
+                  ))}
+                </div>
+
+                <p className="font-semibold text-lg">Abilities</p>
+                <div>
+                  {pokemon.abilities.map((el, index) => (
+                    <li key={index} className="text-sm">
+                      {el.ability.name}
+                    </li>
+                  ))}
+                </div>
+
+                <p className="font-semibold text-lg">Moves</p>
+                <div>
+                  {pokemon.moves.slice(0, 10).map((el, index) => (
+                    <li key={index}>{el.move.name}</li>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <p className="font-semibold text-lg">Stat</p>
+                <p>
+                  {pokemon.stats.map((el, index) => {
+                    return (
+                      <>
+                        <p className="text-base">{el.stat.name} : </p>
+                        <div key={index} className="flex gap-1 items-center">
+                          {Array(Math.ceil(el.base_stat / 10))
+                            .fill("")
+                            .map((_, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="w-4 h-4 bg-accent1 rounded-full"
+                                ></div>
+                              );
+                            })}
+                        </div>
+                      </>
+                    );
+                  })}
+                </p>
+              </div>
             </div>
           </div>
         </div>

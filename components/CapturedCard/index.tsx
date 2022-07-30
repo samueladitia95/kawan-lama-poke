@@ -71,7 +71,9 @@ export default function CapturedCard({
         </div>
       </div>
       {/* MODAL DETAIL */}
-      {isModalOpen && <DetailModal closeModal={setIsModalOpen} />}
+      {isModalOpen && (
+        <DetailModal closeModal={setIsModalOpen} pokemon={pokemon} />
+      )}
     </>
   );
 }
