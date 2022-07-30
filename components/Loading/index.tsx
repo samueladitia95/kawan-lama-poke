@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center my-4 py-4 px-2 rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary w-full sm:max-w-xl">
       <svg className="animate-spin h-16 w-16" viewBox="0 0 24 24">
         <path
           className="opacity-75 text-accent1"
