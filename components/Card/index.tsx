@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useCard } from "./useCard";
 import Loading from "../Loading";
+import { readSavedPokemons } from "../../utils/readSavedPokemons";
 
 export default function Card({ url }: { url: string }) {
   const { isLoading, pokemon } = useCard(url);
@@ -8,9 +9,7 @@ export default function Card({ url }: { url: string }) {
 
   useEffect(() => {
     if (pokemon) {
-      const savedPokemons = window.localStorage
-        .getItem("saved_pokemons")
-        ?.split(";");
+      const savedPokemons = readSavedPokemons();
 
       if (savedPokemons && savedPokemons.includes(String(pokemon.id))) {
         setIsCaptured(true);
@@ -20,9 +19,7 @@ export default function Card({ url }: { url: string }) {
 
   const savePokemon = () => {
     const stringId = String(pokemon.id);
-    const savedPokemons = window.localStorage
-      .getItem("saved_pokemons")
-      ?.split(";");
+    const savedPokemons = readSavedPokemons();
 
     if (isCaptured) {
       console.log(`duplicates`);

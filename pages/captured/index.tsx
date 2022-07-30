@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import CapturedCard from "../../components/CapturedCard";
+import { readSavedPokemons } from "../../utils/readSavedPokemons";
 
 export default function Captured() {
   const [savedids, setSavedIds] = useState<string[]>([]);
 
   useEffect(() => {
-    const savedPokemonIds = window.localStorage
-      .getItem("saved_pokemons")
-      ?.split(";");
+    const savedPokemonIds = readSavedPokemons();
 
     setSavedIds(savedPokemonIds || []);
   }, []);
