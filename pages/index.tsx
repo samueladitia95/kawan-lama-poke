@@ -16,9 +16,12 @@ const Home = ({ randomPokemonUrls }: { randomPokemonUrls: Name[] }) => {
         <link rel="icon" type="image/png" href="/Logo.png"></link>
       </Head>
       <div>
-        <h1 className="dark:text-tDarkPrimary text-5xl text-center my-4">
-          Random Pokemons
-        </h1>
+        <p className="dark:text-tDarkPrimary text-5xl text-center my-4">
+          You Found 5 Random Pokemons
+        </p>
+        <p className="dark:text-tDarkPrimary text-xl text-center my-4">
+          Catch Them All
+        </p>
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
           {randomPokemonUrls.map(({ url }, index: number) => {
             return (

@@ -29,9 +29,9 @@ const Navbar = () => {
         <div className="px-1 flex gap-3">
           <button className="bg-bLightSecondary dark:bg-bDarkSecondary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110">
             {router.pathname === "/" ? (
-              <Link href="/captured">To Captured Pokemon</Link>
+              <Link href="/captured">Go to My Bag</Link>
             ) : (
-              <Link href="/">Home</Link>
+              <Link href="/">Capture More</Link>
             )}
           </button>
           <button
