@@ -32,7 +32,7 @@ const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader(
     "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
+    "public, s-maxage=2, stale-while-revalidate=5"
   );
 
   const randomOffset = Math.floor(Math.random() * 1149);
