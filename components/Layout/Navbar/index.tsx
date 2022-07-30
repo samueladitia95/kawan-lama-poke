@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useGlobalContext } from "../../../context";
 
 const Navbar = () => {
+  const router = useRouter();
   const { setIsDarkMode, isDarkMode } = useGlobalContext();
 
   const toggleDarkMode = (isDarkMode: boolean) => {
@@ -23,7 +26,14 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="px-1 flex">
+        <div className="px-1 flex space-x-3">
+          <button className="bg-bLightSecondary dark:bg-bDarkSecondary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110">
+            {router.pathname === "/" ? (
+              <Link href="/captured">To Captured Pokemon</Link>
+            ) : (
+              <Link href="/">Home</Link>
+            )}
+          </button>
           <button
             className="bg-bLightSecondary dark:bg-bDarkSecondary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110"
             onClick={() => toggleDarkMode(!isDarkMode)}
