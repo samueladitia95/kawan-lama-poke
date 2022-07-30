@@ -16,7 +16,7 @@ const Home = ({ randomPokemonUrls }: { randomPokemonUrls: string[] }) => {
         <h1 className="dark:text-tDarkPrimary text-5xl text-center my-4">
           Random Pokemons
         </h1>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
           {randomPokemonUrls.map((url: string, index: number) => {
             return <Card key={index} url={url} />;
           })}

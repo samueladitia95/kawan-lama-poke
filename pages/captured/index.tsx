@@ -24,7 +24,7 @@ export default function Captured() {
       <h1 className="dark:text-tDarkPrimary text-5xl text-center my-4">
         Captured Pokemons
       </h1>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
         {savedids.map((el: string) => {
           return (
             <CapturedCard
