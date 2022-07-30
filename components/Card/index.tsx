@@ -7,8 +7,18 @@ import Image from "next/image";
 import { capitalizeFirstLetter } from "../../utils/capiralizeFirstLetter";
 import { typeColor } from "../../utils/typeColor";
 
-export default function Card({ url }: { url: string }) {
-  const { isLoading, pokemon } = useCard(url);
+export default function Card({
+  url,
+  pokemonId,
+  deletePokemon,
+}: {
+  url?: string;
+  pokemonId?: string;
+  deletePokemon?: (pokemonId: string) => void;
+}) {
+  const { isLoading, pokemon } = useCard(
+    url ? url : `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
+  );
   const [isCaptured, setIsCaptured] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -82,12 +92,23 @@ export default function Card({ url }: { url: string }) {
             </div>
 
             <div className="flex-1 py-5 pr-4">
-              <button
-                className=" bg-bLightPrimary dark:bg-bDarkPrimary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110 w-full"
-                onClick={savePokemon}
-              >
-                {isCaptured ? "Already Captured" : "Capture"}
-              </button>
+              {deletePokemon && pokemonId ? (
+                <button
+                  className=" bg-bLightPrimary dark:bg-bDarkPrimary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110 w-full"
+                  onClick={() => {
+                    deletePokemon(pokemonId);
+                  }}
+                >
+                  Release Pokemon
+                </button>
+              ) : (
+                <button
+                  className=" bg-bLightPrimary dark:bg-bDarkPrimary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110 w-full"
+                  onClick={savePokemon}
+                >
+                  {isCaptured ? "Already Captured" : "Capture"}
+                </button>
+              )}
             </div>
           </div>
         </div>

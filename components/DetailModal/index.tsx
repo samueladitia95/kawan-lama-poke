@@ -39,7 +39,11 @@ export default function DetailModal({
             </div>
 
             <Image
-              src={pokemon.sprites.other.dream_world.front_default}
+              src={
+                pokemon.sprites.other["dream_world"].front_default
+                  ? pokemon.sprites.other["dream_world"].front_default
+                  : pokemon.sprites.other["official-artwork"].front_default
+              }
               width={350}
               height={350}
               alt="Front"
@@ -78,12 +82,12 @@ export default function DetailModal({
 
               <div className="flex-1">
                 <p className="font-semibold text-lg">Stat</p>
-                <p>
+                <div>
                   {pokemon.stats.map((el, index) => {
                     return (
-                      <>
+                      <div key={index}>
                         <p className="text-base">{el.stat.name} : </p>
-                        <div key={index} className="flex gap-1 items-center">
+                        <div className="flex gap-1 items-center">
                           {Array(Math.ceil(el.base_stat / 10))
                             .fill("")
                             .map((_, index) => {
@@ -95,10 +99,10 @@ export default function DetailModal({
                               );
                             })}
                         </div>
-                      </>
+                      </div>
                     );
                   })}
-                </p>
+                </div>
               </div>
             </div>
           </div>

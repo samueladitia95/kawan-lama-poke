@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CapturedCard from "../../components/CapturedCard";
+import Card from "../../components/Card";
 import { readSavedPokemons } from "../../utils/readSavedPokemons";
 
 export default function Captured() {
@@ -26,13 +26,7 @@ export default function Captured() {
       </h1>
       <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
         {savedids.map((el: string) => {
-          return (
-            <CapturedCard
-              key={el}
-              pokemonId={el}
-              deletePokemon={deletePokemon}
-            />
-          );
+          return <Card key={el} pokemonId={el} deletePokemon={deletePokemon} />;
         })}
       </div>
     </div>
