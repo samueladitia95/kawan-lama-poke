@@ -1,3 +1,5 @@
+import { typeColor } from "./utils/typeColor";
+
 export type Pokemon = {
   id: number;
   order: number;
@@ -69,5 +71,10 @@ type Stat = {
 
 type Type = {
   slot: number;
-  type: Name;
+  type: {
+    name: TypeColor;
+    url: string;
+  };
 };
+
+type TypeColor = keyof typeof typeColor;

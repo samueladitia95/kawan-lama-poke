@@ -4,6 +4,8 @@ import Loading from "../Loading";
 import DetailModal from "../DetailModal";
 import { readSavedPokemons } from "../../utils/readSavedPokemons";
 import Image from "next/image";
+import { capitalizeFirstLetter } from "../../utils/capiralizeFirstLetter";
+import { typeColor } from "../../utils/typeColor";
 
 export default function Card({ url }: { url: string }) {
   const { isLoading, pokemon } = useCard(url);
@@ -44,22 +46,49 @@ export default function Card({ url }: { url: string }) {
 
   return (
     <>
-      <div
-        onClick={() => setIsModalOpen(true)}
-        className="my-4 p-4 rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary"
-      >
-        <div className="flex">
-          <Image
-            src={pokemon.sprites.other["dream_world"].front_default}
-            alt="Pokemon List"
-            width={180}
-            height={180}
-          />
-          <div>
-            <p className="dark:text-tDarkPrimary">{pokemon.name}</p>
-            <button className="bg-accent1" onClick={savePokemon}>
-              {isCaptured ? "Already Captured" : "Capture"}
-            </button>
+      <div className="my-4 py-4 px-2  rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary">
+        <div className="flex space-x-4">
+          <div
+            className="bg-accent1/20 rounded-full cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <Image
+              src={pokemon.sprites.other["official-artwork"].front_default}
+              alt="Pokemon List"
+              width={180}
+              height={180}
+            />
+          </div>
+          <div className="flex flex-col flex-1 space-y-2">
+            <p className="dark:text-tDarkPrimary text-2xl">
+              <span className="text-sm font-light">#${pokemon.order}</span>{" "}
+              {capitalizeFirstLetter(pokemon.name)}
+            </p>
+            <div className="flex space-x-2 text-tDarkPrimary font-semibold">
+              {pokemon.types.map((el) => (
+                <div
+                  key={el.slot}
+                  className="rounded-lg px-3 my-2 text-sm"
+                  style={{ backgroundColor: typeColor[el.type.name] }}
+                >
+                  {capitalizeFirstLetter(el.type.name)}
+                </div>
+              ))}
+            </div>
+
+            <div className="text-sm">
+              <p>Height : {pokemon.height * 10} cm</p>
+              <p>Weight : {pokemon.weight / 10} kg</p>
+            </div>
+
+            <div className="flex-1 py-5 pr-4">
+              <button
+                className=" bg-bLightPrimary dark:bg-bDarkPrimary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110 w-full"
+                onClick={savePokemon}
+              >
+                {isCaptured ? "Already Captured" : "Capture"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
