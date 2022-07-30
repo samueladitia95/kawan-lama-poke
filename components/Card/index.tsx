@@ -60,7 +60,7 @@ export default function Card({
       setIsCaptured(true);
     }
   };
-  console.log(url);
+
   if (isLoading) {
     return <Loading />;
   }

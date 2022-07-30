@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { fetcher } from "../utils/fetcher";
@@ -8,6 +8,8 @@ import { Name } from "../type";
 const Home = ({ pokemons }: { pokemons: Name[] }) => {
   const [isMax, setIsMax] = useState<boolean>(false);
   const [randomPokemons, setRandomPokemon] = useState<Name[]>([]);
+  const [query, setQuery] = useState<string>("");
+
   useEffect(() => {
     const randomPokemonUrls: Name[] = Array(5)
       .fill("")
@@ -16,6 +18,19 @@ const Home = ({ pokemons }: { pokemons: Name[] }) => {
       });
     setRandomPokemon(randomPokemonUrls);
   }, [pokemons]);
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    let randomPokemonUrls: Name[] = pokemons.filter((el) => {
+      const regex = new RegExp(query.toLocaleLowerCase());
+      return el.name.match(regex);
+    });
+    if (randomPokemonUrls.length > 5) {
+      randomPokemonUrls = randomPokemonUrls.slice(0, 5);
+    }
+    setRandomPokemon(randomPokemonUrls);
+  };
+
   return (
     <Fragment>
       <Head>
@@ -25,11 +40,33 @@ const Home = ({ pokemons }: { pokemons: Name[] }) => {
       </Head>
       <div>
         <p className="dark:text-tDarkPrimary text-5xl text-center my-4">
-          You Found 5 Random Pokemons
+          You Found {randomPokemons.length} Random Pokemons
         </p>
         <p className="dark:text-tDarkPrimary text-xl text-center my-4">
-          Catch Them All
+          or you can search for it
         </p>
+        <div className="flex justify-center">
+          <form
+            className="flex gap-2"
+            onSubmit={(event: FormEvent<HTMLFormElement>) => {
+              handleSearch(event);
+            }}
+          >
+            <input
+              className="border-tLightPrimary border-2 p-2 rounded-lg"
+              type="text"
+              name="search"
+              placeholder="Search with pokemon name"
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setQuery(event.target.value);
+              }}
+              value={query}
+            />
+            <button className="bg-bLightSecondary dark:bg-bDarkSecondary dark:hover:bg-accent1 p-3 hover:bg-accent1 hover:bg-opacity-80 rounded-full transition ease-in-out delay-100 hover:scale-110">
+              Search
+            </button>
+          </form>
+        </div>
         <div className="flex flex-col items-center lg:flex-row lg:flex-wrap lg:gap-4 lg:justify-center">
           {randomPokemons.map(({ url }, index: number) => {
             return (
