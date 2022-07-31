@@ -16,7 +16,7 @@ export default function DetailModal({
       <div className="bg-black opacity-40 fixed h-screen w-screen top-0 left-0 z-40"></div>
       <div className="overflow-y-auto overflow-x-hidden fixed z-50 w-full inset-0 h-full flex justify-center ">
         <div className="relative p-4 w-full max-w-2xl h-full md:h-auto ">
-          <div className="relative bg-white rounded-xl shadow dark:bg-bDarkPrimary flex flex-col items-stretch gap-6">
+          <div className="relative bg-white rounded-xl shadow dark:bg-bDarkPrimary">
             <div className="flex justify-between items-center p-5 rounded-t border-b">
               <p className="text-2xl w-full text-center">
                 <span className="text-sm font-light">#${pokemon.order}</span>{" "}
@@ -38,19 +38,20 @@ export default function DetailModal({
               </button>
             </div>
 
-            <Image
-              src={
-                pokemon.sprites.other["dream_world"].front_default
-                  ? pokemon.sprites.other["dream_world"].front_default
-                  : pokemon.sprites.other["official-artwork"].front_default
-                  ? pokemon.sprites.other["official-artwork"].front_default
-                  : "/image404.png"
-              }
-              width={350}
-              height={350}
-              alt="Front"
-            />
-            <div className="p-5 flex gap-20">
+            <div className="p-10 flex flex-col gap-4">
+              <Image
+                src={
+                  pokemon.sprites.other["dream_world"].front_default
+                    ? pokemon.sprites.other["dream_world"].front_default
+                    : pokemon.sprites.other["official-artwork"].front_default
+                    ? pokemon.sprites.other["official-artwork"].front_default
+                    : "/image404.png"
+                }
+                width={350}
+                height={350}
+                alt="Front"
+              />
+
               <div>
                 <p className="font-semibold text-lg">Type</p>
                 <div className="flex gap-4">
@@ -64,46 +65,50 @@ export default function DetailModal({
                     </div>
                   ))}
                 </div>
-
-                <p className="font-semibold text-lg">Abilities</p>
-                <div>
-                  {pokemon.abilities.map((el, index) => (
-                    <li key={index} className="text-sm">
-                      {el.ability.name}
-                    </li>
-                  ))}
-                </div>
-
-                <p className="font-semibold text-lg">Moves</p>
-                <div>
-                  {pokemon.moves.slice(0, 10).map((el, index) => (
-                    <li key={index}>{el.move.name}</li>
-                  ))}
-                </div>
               </div>
 
-              <div className="flex-1">
-                <p className="font-semibold text-lg">Stat</p>
+              <div className="flex gap-3 md:gap-20">
                 <div>
-                  {pokemon.stats.map((el, index) => {
-                    return (
-                      <div key={index}>
-                        <p className="text-base">{el.stat.name} : </p>
-                        <div className="flex gap-1 items-center">
-                          {Array(Math.ceil(el.base_stat / 10))
-                            .fill("")
-                            .map((_, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className="w-4 h-4 bg-accent1 rounded-full"
-                                ></div>
-                              );
-                            })}
+                  <p className="font-semibold text-lg">Abilities</p>
+                  <div>
+                    {pokemon.abilities.map((el, index) => (
+                      <li key={index} className="text-sm">
+                        {el.ability.name}
+                      </li>
+                    ))}
+                  </div>
+
+                  <p className="font-semibold text-lg mt-4">Moves</p>
+                  <div>
+                    {pokemon.moves.slice(0, 10).map((el, index) => (
+                      <li key={index}>{el.move.name}</li>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <p className="font-semibold text-lg">Stat</p>
+                  <div>
+                    {pokemon.stats.map((el, index) => {
+                      return (
+                        <div key={index} className="mb-2">
+                          <p className="mb-1">{el.stat.name} : </p>
+                          <div className="flex flex-wrap gap-1 items-center">
+                            {Array(Math.ceil(el.base_stat / 10))
+                              .fill("")
+                              .map((_, index) => {
+                                return (
+                                  <div
+                                    key={index}
+                                    className="w-4 h-4 bg-accent1 rounded-full"
+                                  ></div>
+                                );
+                              })}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
