@@ -19,7 +19,7 @@ export default function DetailModal({
           <div className="relative bg-white rounded-xl shadow dark:bg-bDarkPrimary">
             <div className="flex justify-between items-center p-5 rounded-t border-b">
               <p className="text-2xl w-full text-center">
-                <span className="text-sm font-light">#${pokemon.order}</span>{" "}
+                <span className="text-sm font-light">#{pokemon.order}</span>{" "}
                 {capitalizeFirstLetter(pokemon.name)}
               </p>
               <button

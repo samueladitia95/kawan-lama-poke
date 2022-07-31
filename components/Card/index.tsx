@@ -82,7 +82,7 @@ export default function Card({
           </div>
           <div className="flex flex-col flex-1 gap-2">
             <p className="dark:text-tDarkPrimary text-xl">
-              <span className="text-sm font-light">#${pokemon.order}</span>{" "}
+              <span className="text-sm font-light">#{pokemon.order}</span>{" "}
               {capitalizeFirstLetter(pokemon.name)}
             </p>
             <div className="flex gap-2 text-tDarkPrimary font-semibold">
