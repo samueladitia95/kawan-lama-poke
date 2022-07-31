@@ -69,10 +69,10 @@ const Home = ({ pokemons, count }: { pokemons: Name[]; count: number }) => {
             }}
           >
             <input
-              className="border-2 p-2 rounded-lg dark:bg-bDarkSecondary dark:border-bDarkSecondary "
+              className="border-2 p-2 rounded-lg dark:bg-bDarkSecondary dark:border-bDarkSecondary w-3/4"
               type="text"
               name="search"
-              placeholder="Search with pokemon name"
+              placeholder="Search Here"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setQuery(event.target.value);
               }}

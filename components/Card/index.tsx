@@ -64,7 +64,7 @@ export default function Card({
       <div className="my-4 py-4 px-2 rounded-lg bg-bLightSecondary dark:bg-bDarkSecondary w-full sm:max-w-xl">
         <div className="flex gap-4">
           <div
-            className="bg-accent1/20 rounded-full cursor-pointer"
+            className="bg-accent1/20 rounded-full cursor-pointer flex items-center"
             onClick={() => setIsModalOpen(true)}
           >
             <Image
@@ -125,7 +125,7 @@ export default function Card({
                   {isCaptured
                     ? "Already Captured"
                     : isMax
-                    ? "You already have too many"
+                    ? "Too Many Pokemons"
                     : "Capture"}
                 </button>
               )}
