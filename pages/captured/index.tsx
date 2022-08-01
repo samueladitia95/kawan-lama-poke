@@ -29,7 +29,7 @@ export default function Captured() {
       <Head>
         <title>My Bag</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" type="image/png" href="/Logo.png"></link>
+        <link rel="icon" type="image/png" href="/logoTab.png"></link>
       </Head>
       <div>
         <p className="dark:text-tDarkPrimary text-5xl text-center my-4">
